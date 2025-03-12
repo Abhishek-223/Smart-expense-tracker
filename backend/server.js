@@ -9,7 +9,10 @@ import connectDB from "./config/db.js"; // Import the connectDB function
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://smart-expense-tracker-delta.vercel.app"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Error handling middleware for JSON parsing errors
