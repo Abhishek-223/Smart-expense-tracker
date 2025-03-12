@@ -17,12 +17,12 @@ export const ExpenseProvider = ({ children }) => {
       if (!authToken) return; // Don't fetch if there's no token
 
       try {
-        const response = await axios.get("https://smart-expense-tracker-f7q7.onrender.com/expenses", {
-          headers: { Authorization: `Bearer ${authToken}` },
+        const response = await axios.get("https://smart-expense-tracker-f7q7.onrender.com/api/expenses", {
+          headers: { Authorization: `Bearer ${authToken}` }, // ✅ Fix template literals
         });
         setExpenses(response.data);
       } catch (error) {
-        console.error("Failed to fetch expenses:", error);
+        console.error("Failed to fetch expenses:", error.response ? error.response.data : error.message);
       }
     };
 
@@ -32,24 +32,24 @@ export const ExpenseProvider = ({ children }) => {
   const addExpense = async (expense) => {
     try {
       const response = await axios.post("https://smart-expense-tracker-f7q7.onrender.com/api/expenses/add", expense, {
-        headers: { Authorization: `Bearer ${authToken}` },
+        headers: { Authorization: `Bearer ${authToken}` }, // ✅ Fix template literals
       });
       setExpenses((prevExpenses) => [...prevExpenses, response.data]);
     } catch (error) {
-      console.error("Failed to add expense:", error);
+      console.error("Failed to add expense:", error.response ? error.response.data : error.message);
     }
   };
 
   const updateExpense = async (id, updatedExpense) => {
     try {
       const response = await axios.put(`https://smart-expense-tracker-f7q7.onrender.com/api/expenses/${id}`, updatedExpense, {
-        headers: { Authorization: `Bearer ${authToken}` },
+        headers: { Authorization: `Bearer ${authToken}` }, // ✅ Fix template literals
       });
       setExpenses((prevExpenses) =>
         prevExpenses.map((expense) => (expense._id === id ? response.data : expense))
       );
     } catch (error) {
-      console.error("Failed to update expense:", error);
+      console.error("Failed to update expense:", error.response ? error.response.data : error.message);
     }
   };
 
