@@ -61,9 +61,9 @@ const Login = () => {
           </form>
           <h2>
             Don't have an account?
-            <a href="/register" className="text-blue-300">
+            <div onClick={handleSignUp} className="text-blue-300 cursor-pointer">
               Sign Up
-            </a>
+            </div>
           </h2>
         </div>
       </div>
