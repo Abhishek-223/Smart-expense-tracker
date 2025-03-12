@@ -17,7 +17,7 @@ export const ExpenseProvider = ({ children }) => {
       if (!authToken) return; // Don't fetch if there's no token
 
       try {
-        const response = await axios.get("http://localhost:5000/api/expenses", {
+        const response = await axios.get("https://smart-expense-tracker-f7q7.onrender.com/expenses", {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         setExpenses(response.data);
@@ -31,7 +31,7 @@ export const ExpenseProvider = ({ children }) => {
 
   const addExpense = async (expense) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/expenses/add", expense, {
+      const response = await axios.post("https://smart-expense-tracker-f7q7.onrender.com/api/expenses/add", expense, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setExpenses((prevExpenses) => [...prevExpenses, response.data]);
@@ -42,7 +42,7 @@ export const ExpenseProvider = ({ children }) => {
 
   const updateExpense = async (id, updatedExpense) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/expenses/${id}`, updatedExpense, {
+      const response = await axios.put(`https://smart-expense-tracker-f7q7.onrender.com/api/expenses/${id}`, updatedExpense, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setExpenses((prevExpenses) =>

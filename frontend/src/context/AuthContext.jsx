@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+      const { data } = await axios.post("https://smart-expense-tracker-f7q7.onrender.com/api/auth/login", { email, password });
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);
