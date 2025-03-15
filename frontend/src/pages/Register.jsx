@@ -30,7 +30,7 @@ const Register = () => {
       console.log("Google Token Received:", googleToken);
 
       // Send Google token to backend
-      const res = await axios.post("http://localhost:5000/api/auth/google", { token: googleToken });
+      const res = await axios.post("https://smart-expense-tracker-f7q7.onrender.com/api/auth/google", { token: googleToken });
 
       if (res.data.token) {
         console.log("Backend Response:", res.data);
