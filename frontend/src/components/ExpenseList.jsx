@@ -29,33 +29,6 @@ const ExpenseList = ({ openEditForm }) => {
       ? sortedExpenses
       : sortedExpenses.filter((expense) => expense.category === categoryFilter);
 
-  // Handle Image Upload
-  const handleImageUpload = async (e, expenseId) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    const formData = new FormData();
-    formData.append("receipt", file);
-
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `http://localhost:5000/api/uploads/receipt`,
-        formData,
-        {
-          headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
-        }
-      );
-
-      // Update the expense with the new image URL
-      await updateExpense(expenseId, { receiptUrl: response.data.url });
-
-    } catch (error) {
-      console.error("Image upload failed:", error);
-      alert("Failed to upload image");
-    }
-  };
-
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full">
       {/* Filters */}
@@ -94,7 +67,6 @@ const ExpenseList = ({ openEditForm }) => {
                 <th className="py-2 px-4 text-center">Title</th>
                 <th className="py-2 px-4 text-center">Category</th>
                 <th className="py-2 px-4 text-center">Amount</th>
-                <th className="py-2 px-4 text-center">Receipt</th>
                 <th className="py-2 px-4 text-center">Actions</th>
               </tr>
             </thead>
@@ -106,24 +78,15 @@ const ExpenseList = ({ openEditForm }) => {
                   <td className="py-2 px-4 text-center">{expense.category}</td>
                   <td className="py-2 px-4 text-center">Rs.{expense.amount}</td>
                   <td className="py-2 px-4 text-center">
-                    {expense.receiptUrl ? (
-                      <a href={expense.receiptUrl} target="_blank" rel="noopener noreferrer">
-                        <img src={expense.receiptUrl} alt="Receipt" className="w-12 h-12 object-cover rounded" />
-                      </a>
-                    ) : (
-                      <input type="file" onChange={(e) => handleImageUpload(e, expense._id)} className="border p-1" />
-                    )}
-                  </td>
-                  <td className="py-2 px-4 text-center">
                     <button
                       className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
-                      onClick={() => openEditForm(expense)}
+                      onClick={() => openEditForm(expense)} // ✅ Wrapped in arrow function
                     >
                       Edit
                     </button>
                     <button
                       className="bg-red-500 text-white px-2 py-1 rounded"
-                      onClick={() => deleteExpense(expense._id)}
+                      onClick={() => deleteExpense(expense._id)} // ✅ Wrapped in arrow function
                     >
                       Delete
                     </button>
