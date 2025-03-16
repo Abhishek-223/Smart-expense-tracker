@@ -17,8 +17,8 @@ export const ExpenseProvider = ({ children }) => {
       if (!authToken) return; // Don't fetch if there's no token
 
       try {
-        const response = await axios.get("https://smart-expense-tracker-f7q7.onrender.com/api/expenses", {
-          headers: { Authorization: `Bearer ${authToken}` },
+        const response = await axios.get("https://smart-expense-tracker-f7q7.onrender.com/expenses", {
+          headers: { Authorization: `Bearer ${authToken} `},
         });
         setExpenses(response.data);
       } catch (error) {
