@@ -86,53 +86,47 @@ const ExpenseList = ({ openEditForm }) => {
 
       {/* Expense Items */}
       {filteredExpenses.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="py-2 px-4 text-center">Date</th>
-                <th className="py-2 px-4 text-center">Title</th>
-                <th className="py-2 px-4 text-center">Category</th>
-                <th className="py-2 px-4 text-center">Amount</th>
-                <th className="py-2 px-4 text-center">Receipt</th>
-                <th className="py-2 px-4 text-center">Actions</th>
+        <div className="overflow-x-auto w-full">
+        <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
+          <thead>
+            <tr className="bg-gray-200 text-xs md:text-sm">
+              <th className="py-2 px-2 md:px-4 text-center">Date</th>
+              <th className="py-2 px-2 md:px-4 text-center">Title</th>
+              <th className="py-2 px-2 md:px-4 text-center">Category</th>
+              <th className="py-2 px-2 md:px-4 text-center">Amount</th>
+              <th className="py-2 px-2 md:px-4 text-center">Receipt</th>
+              <th className="py-2 px-2 md:px-4 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredExpenses.map((expense) => (
+              <tr key={expense._id} className="border-t text-xs md:text-sm">
+                <td className="py-2 px-2 text-center">{new Date(expense.date).toLocaleDateString()}</td>
+                <td className="py-2 px-2 text-center">{expense.title}</td>
+                <td className="py-2 px-2 text-center">{expense.category}</td>
+                <td className="py-2 px-2 text-center">Rs.{expense.amount}</td>
+                <td className="py-2 px-2 text-center">
+                  {expense.receiptUrl ? (
+                    <a href={expense.receiptUrl} target="_blank" rel="noopener noreferrer">
+                      <img src={expense.receiptUrl} alt="Receipt" className="w-8 h-8 md:w-12 md:h-12 rounded" />
+                    </a>
+                  ) : (
+                    <input type="file" onChange={(e) => handleImageUpload(e, expense._id)} className="border p-1" />
+                  )}
+                </td>
+                <td className="py-2 px-2 text-center">
+                  <button className="bg-yellow-500 text-white px-2 py-1 rounded mr-2" onClick={() => openEditForm(expense)}>
+                    Edit
+                  </button>
+                  <button className="bg-red-500 text-white px-2 py-1 rounded" onClick={() => deleteExpense(expense._id)}>
+                    Delete
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredExpenses.map((expense) => (
-                <tr key={expense._id} className="border-t">
-                  <td className="py-2 px-4 text-center">{new Date(expense.date).toLocaleDateString()}</td>
-                  <td className="py-2 px-4 text-center">{expense.title}</td>
-                  <td className="py-2 px-4 text-center">{expense.category}</td>
-                  <td className="py-2 px-4 text-center">Rs.{expense.amount}</td>
-                  <td className="py-2 px-4 text-center">
-                    {expense.receiptUrl ? (
-                      <a href={expense.receiptUrl} target="_blank" rel="noopener noreferrer">
-                        <img src={expense.receiptUrl} alt="Receipt" className="w-12 h-12 object-cover rounded" />
-                      </a>
-                    ) : (
-                      <input type="file" onChange={(e) => handleImageUpload(e, expense._id)} className="border p-1" />
-                    )}
-                  </td>
-                  <td className="py-2 px-4 text-center">
-                    <button
-                      className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
-                      onClick={() => openEditForm(expense)} // ✅ Wrapped in arrow function
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-2 py-1 rounded"
-                      onClick={() => deleteExpense(expense._id)} // ✅ Wrapped in arrow function
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>      
       ) : (
         <p className="text-gray-500 text-center">No expenses found.</p>
       )}
