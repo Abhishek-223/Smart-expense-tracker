@@ -11,13 +11,15 @@ export const useExpenses = () => {
 export const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([]);
   const { authToken } = useAuth(); // Get authToken from AuthContext
+  //const url=`https://smart-expense-tracker-f7q7.onrender.com/`
+  const url=`http://localhost:5000/`
 
   useEffect(() => {
     const fetchExpenses = async () => {
       if (!authToken) return; // Don't fetch if there's no token
 
       try {
-        const response = await axios.get("https://smart-expense-tracker-f7q7.onrender.com/api/expenses", {
+        const response = await axios.get(`${url}/api/expenses`, {
           headers: { Authorization: `Bearer ${authToken}`},
         });
         setExpenses(response.data);
@@ -31,7 +33,7 @@ export const ExpenseProvider = ({ children }) => {
 
   const addExpense = async (expense) => {
     try {
-      const response = await axios.post("https://smart-expense-tracker-f7q7.onrender.com/api/expenses/add", expense, {
+      const response = await axios.post(`${url}/api/expenses/add`, expense, {
         headers: { 
           Authorization: `Bearer ${authToken}`,
           "Content-Type": "application/json" // ✅ Ensures JSON is sent correctly
@@ -46,7 +48,7 @@ export const ExpenseProvider = ({ children }) => {
 
   const updateExpense = async (id, updatedExpense) => {
     try {
-      const response = await axios.put(`https://smart-expense-tracker-f7q7.onrender.com/api/expenses/${id}`, updatedExpense, {
+      const response = await axios.put(`${url}/api/expenses/${id}`, updatedExpense, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
@@ -60,7 +62,7 @@ export const ExpenseProvider = ({ children }) => {
 
   const deleteExpense = async (id) => {
     try {
-      await axios.delete(`https://smart-expense-tracker-f7q7.onrender.com/api/expenses/${id}`, {
+      await axios.delete(`${url}/api/expenses/${id}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 

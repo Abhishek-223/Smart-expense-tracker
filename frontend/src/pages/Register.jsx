@@ -10,6 +10,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const { register, login } = useContext(AuthContext);
   const navigate = useNavigate();
+//const url=`https://smart-expense-tracker-f7q7.onrender.com/`
+const url=`http://localhost:5000/`
 
   // 🔹 Handle Manual Registration
   const handleSubmit = async (e) => {
@@ -30,7 +32,7 @@ const Register = () => {
       console.log("Google Token Received:", googleToken);
 
       // Send Google token to backend
-      const res = await axios.post("https://smart-expense-tracker-f7q7.onrender.com/api/auth/google", { token: googleToken });
+      const res = await axios.post(`${url}api/auth/google`, { token: googleToken });
 
       if (res.data.token) {
         console.log("Backend Response:", res.data);

@@ -10,6 +10,8 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [authToken, setAuthToken] = useState(localStorage.getItem("token") || "");
+  //const url=`https://smart-expense-tracker-f7q7.onrender.com/`
+  const url=`http://localhost:5000/`
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -18,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const { data } = await axios.post("https://smart-expense-tracker-f7q7.onrender.com/api/auth/login", { email, password });
+      const { data } = await axios.post(`${url}/api/auth/login`, { email, password });
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);

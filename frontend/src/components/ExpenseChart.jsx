@@ -16,6 +16,8 @@ ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearS
 
 const ExpenseChart = () => {
   const [expenses, setExpenses] = useState([]);
+  //const url=`https://smart-expense-tracker-f7q7.onrender.com/`
+const url=`http://localhost:5000/`
 
   useEffect(() => {
     fetchExpenses();
@@ -24,7 +26,7 @@ const ExpenseChart = () => {
   const fetchExpenses = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("https://smart-expense-tracker-f7q7.onrender.com/api/expenses", {
+      const response = await axios.get(`${url}/api/expenses`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setExpenses(response.data);
