@@ -11,8 +11,8 @@ export const useExpenses = () => {
 export const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([]);
   const { authToken } = useAuth(); // Get authToken from AuthContext
-  //const url=`https://smart-expense-tracker-f7q7.onrender.com/`
-  const url=`http://localhost:5000/`
+  //const url=`https://smart-expense-tracker-f7q7.onrender.com`
+  const url=`http://localhost:5000`
 
   useEffect(() => {
     const fetchExpenses = async () => {

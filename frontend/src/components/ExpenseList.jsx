@@ -6,8 +6,6 @@ const ExpenseList = ({ openEditForm }) => {
   const { expenses, deleteExpense, updateExpense } = useExpenses();
   const [sortBy, setSortBy] = useState("newest");
   const [categoryFilter, setCategoryFilter] = useState("all");
-  //const url=`https://smart-expense-tracker-f7q7.onrender.com/`
-  const url=`http://localhost:5000/`
 
   // Sort expenses
   const sortedExpenses = [...expenses].sort((a, b) => {
