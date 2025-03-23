@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useExpenses } from "../context/ExpenseContext";
 import ReceiptUpload from "./ReceiptUpload";
-import axios from "axios";
 
 const ExpenseForm = ({ existingExpense, closeForm }) => {
   const { addExpense, updateExpense } = useExpenses();
@@ -34,37 +33,46 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">{existingExpense ? "Edit Expense" : "Add Expense"}</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700">Title</label>
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-md w-full max-w-lg mx-auto">
+      <h2 className="text-lg md:text-xl font-semibold mb-4 text-center">
+        {existingExpense ? "Edit Expense" : "Add Expense"}
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Title */}
+        <div>
+          <label className="block text-gray-700 font-medium">Title</label>
           <input
             type="text"
             placeholder="Expense Title"
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded focus:ring focus:ring-blue-300"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700">Amount</label>
-          <input
-            type="number"
-            placeholder="Amount"
-            className="border p-2 w-full rounded"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
+        {/* Amount */}
+        <div>
+          <label className="block text-gray-700 font-medium">Amount</label>
+          <div className="flex items-center border rounded">
+            <span className="bg-gray-200 px-3 py-2 text-gray-700">Rs.</span>
+            <input
+              type="number"
+              placeholder="Amount"
+              className="p-2 w-full rounded-r focus:ring focus:ring-blue-300"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              required
+            />
+          </div>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700">Category</label>
+        {/* Category */}
+        <div>
+          <label className="block text-gray-700 font-medium">Category</label>
           <select
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded focus:ring focus:ring-blue-300"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -75,41 +83,51 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           </select>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700">Date</label>
+        {/* Date */}
+        <div>
+          <label className="block text-gray-700 font-medium">Date</label>
           <input
             type="date"
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded focus:ring focus:ring-blue-300"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700">Note</label>
+        {/* Note */}
+        <div>
+          <label className="block text-gray-700 font-medium">Note</label>
           <textarea
-            placeholder="Note"
-            className="border p-2 w-full rounded"
+            placeholder="Add a note (optional)"
+            className="border p-2 w-full rounded focus:ring focus:ring-blue-300"
             value={note}
             onChange={(e) => setNote(e.target.value)}
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700">Upload Receipt (optional)</label>
+        {/* Receipt Upload */}
+        <div>
+          <label className="block text-gray-700 font-medium">Upload Receipt (optional)</label>
           <ReceiptUpload onUpload={setReceiptUrl} />
         </div>
 
-        <div className="flex justify-between">
+        {/* Buttons */}
+        <div className="flex flex-col md:flex-row justify-between gap-2">
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full md:w-auto"
             disabled={loading}
           >
             {loading ? "Saving..." : existingExpense ? "Update Expense" : "Add Expense"}
           </button>
-          <button type="button" onClick={closeForm} className="text-gray-500">Cancel</button>
+          <button
+            type="button"
+            onClick={closeForm}
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 w-full md:w-auto"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

@@ -10,8 +10,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const { register, login } = useContext(AuthContext);
   const navigate = useNavigate();
-//const url=`https://smart-expense-tracker-f7q7.onrender.com`
-const url=`http://localhost:5000`
+const url=`https://smart-expense-tracker-f7q7.onrender.com`
+// const url=`http://localhost:5000`
 
   // 🔹 Handle Manual Registration
   const handleSubmit = async (e) => {

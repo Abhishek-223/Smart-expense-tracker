@@ -12,40 +12,47 @@ const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [showForm, setShowForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // ✅ Sidebar is open by default on desktop
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
 
   const openAddForm = () => {
-    setEditingExpense(null); // Reset editing state
+    setEditingExpense(null);
     setShowForm(true);
   };
 
   const openEditForm = (expense) => {
-    console.log("Editing Expense:", expense); // Debugging
-    setEditingExpense(expense); // Set selected expense for editing
+    setEditingExpense(expense);
     setShowForm(true);
   };
 
   const closeForm = () => {
     setShowForm(false);
-    setEditingExpense(null); // Reset editing state after closing
+    setEditingExpense(null);
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <Sidebar setActiveSection={setActiveSection} />
-
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <Header />
-
-        <div className="p-6">
+    <div className="min-h-screen bg-gray-100 w-full">
+      {/* Header */}
+      <Header toggleSidebar={toggleSidebar} className="relative z-50" /> {/* Ensure header is on top */}
+  
+      <div className="w-full flex relative">
+        {/* Sidebar */}
+        <Sidebar 
+          setActiveSection={setActiveSection} 
+          isSidebarOpen={isSidebarOpen} 
+          toggleSidebar={toggleSidebar} 
+        />
+  
+        {/* Main Content (Add padding to prevent overlap) */}
+        <div className="p-6 w-full pt-16 md:pt-6"> {/* Add `pt-16` for small screens */}
           {activeSection === "dashboard" && (
             <>
-              {/* Summary Cards */}
               <SummaryCards />
-
-              <div className="mt-6">
-                {/* Show Expense Form when Editing */}
+  
+              <div className="mt-6 w-full">
                 {showForm ? (
                   <div className="bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-2xl font-bold mb-4">
@@ -62,14 +69,14 @@ const Dashboard = () => {
               </div>
             </>
           )}
-
+  
           {activeSection === "add-expense" && (
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-bold mb-4">Add Expense</h2>
               <ExpenseForm existingExpense={editingExpense} closeForm={closeForm} />
             </div>
           )}
-
+  
           {activeSection === "reports" && (
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-bold mb-4">Expense Reports</h2>
@@ -80,6 +87,7 @@ const Dashboard = () => {
       </div>
     </div>
   );
+  
 };
 
 export default Dashboard;
