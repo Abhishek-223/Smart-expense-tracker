@@ -18,7 +18,7 @@ const ReceiptUpload = ({ onUpload }) => {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" },
       });
 
-      onUpload(response.data.url); // Pass uploaded URL back to parent component
+      onUpload(response.data.url); 
     } catch (error) {
       console.error("Upload error", error);
       alert("Failed to upload receipt");

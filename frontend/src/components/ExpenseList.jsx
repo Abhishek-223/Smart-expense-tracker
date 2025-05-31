@@ -7,7 +7,6 @@ const ExpenseList = ({ openEditForm }) => {
   const [sortBy, setSortBy] = useState("newest");
   const [categoryFilter, setCategoryFilter] = useState("all");
 
-  // Sort expenses
   const sortedExpenses = [...expenses].sort((a, b) => {
     switch (sortBy) {
       case "newest":
@@ -23,13 +22,11 @@ const ExpenseList = ({ openEditForm }) => {
     }
   });
 
-  // Filter expenses
   const filteredExpenses =
     categoryFilter === "all"
       ? sortedExpenses
       : sortedExpenses.filter((expense) => expense.category === categoryFilter);
 
-  // Handle Image Upload (Cloudinary)
   const handleImageUpload = async (e, expenseId) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -47,7 +44,6 @@ const ExpenseList = ({ openEditForm }) => {
         }
       );
 
-      // Update expense with receipt URL
       await updateExpense(expenseId, { receiptUrl: response.data.url });
 
     } catch (error) {
@@ -58,7 +54,6 @@ const ExpenseList = ({ openEditForm }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full">
-      {/* Filters */}
       <div className="flex justify-between mb-4">
         <select
           value={sortBy}
@@ -84,7 +79,6 @@ const ExpenseList = ({ openEditForm }) => {
         </select>
       </div>
 
-      {/* Expense Items */}
       {filteredExpenses.length > 0 ? (
         <div className="overflow-x-auto w-full">
         <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">

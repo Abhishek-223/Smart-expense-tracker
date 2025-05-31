@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Menu } from "lucide-react"; // ✅ Sidebar toggle icon
+import { Menu } from "lucide-react"; 
 
 const Header = ({ toggleSidebar }) => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // ✅ Mobile dropdown state
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
   const handleLogout = () => {
     logout();
@@ -15,7 +15,6 @@ const Header = ({ toggleSidebar }) => {
 
   return (
     <div className="bg-white shadow-md p-4 flex w-full justify-between items-center relative z-50">
-      {/* Sidebar Toggle Button (Mobile) */}
       <button
         className="md:hidden p-2 rounded-full text-gray-700 hover:bg-gray-200"
         onClick={toggleSidebar}
@@ -23,12 +22,10 @@ const Header = ({ toggleSidebar }) => {
         <Menu size={28} />
       </button>
 
-      {/* Title */}
       <h1 className="text-xl md:text-2xl font-bold text-blue-600 flex-1 text-center md:text-left">
         Dashboard
       </h1>
 
-      {/* User Info & Logout (Desktop) */}
       <div className="hidden md:flex items-center gap-4 relative">
         <span className="text-gray-700 font-medium">{user?.name}</span>
         <img
@@ -37,8 +34,7 @@ const Header = ({ toggleSidebar }) => {
           className="w-10 h-10 rounded-full border cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         />
-        
-        {/* ✅ Fixed Logout Menu */}
+
         {isMenuOpen && (
           <div className="absolute right-0 top-12 bg-white shadow-lg rounded-lg w-40 border border-gray-300 z-50">
             <div className="p-4 text-center text-gray-700 font-medium">{user?.name}</div>
@@ -52,7 +48,6 @@ const Header = ({ toggleSidebar }) => {
         )}
       </div>
 
-      {/* User Info & Logout (Mobile Dropdown) */}
       <div className="md:hidden relative">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -65,7 +60,6 @@ const Header = ({ toggleSidebar }) => {
           />
         </button>
 
-        {/* ✅ Mobile Logout Dropdown Positioned Properly */}
         {isMenuOpen && (
           <div className="absolute right-4 top-12 bg-white shadow-lg rounded-lg w-40 border border-gray-300 z-50">
             <div className="p-4 text-center text-gray-700 font-medium">{user?.name}</div>

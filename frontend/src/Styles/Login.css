@@ -1,17 +1,4 @@
-/* @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.animate-fade-in {
-  animation: fade-in 1s ease-in-out;
-} */
 
 .bg-login{
   background-image: url('https://i.pinimg.com/474x/b0/45/3e/b0453ee804e68c61a643bd928d3fdaa5.jpg'); 

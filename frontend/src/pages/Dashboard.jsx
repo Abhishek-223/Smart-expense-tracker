@@ -35,19 +35,16 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 w-full">
-      {/* Header */}
-      <Header toggleSidebar={toggleSidebar} className="relative z-50" /> {/* Ensure header is on top */}
+      <Header toggleSidebar={toggleSidebar} className="relative z-50" /> 
   
       <div className="w-full flex relative">
-        {/* Sidebar */}
         <Sidebar 
           setActiveSection={setActiveSection} 
           isSidebarOpen={isSidebarOpen} 
           toggleSidebar={toggleSidebar} 
         />
   
-        {/* Main Content (Add padding to prevent overlap) */}
-        <div className="p-6 w-full pt-16 md:pt-6"> {/* Add `pt-16` for small screens */}
+        <div className="p-6 w-full pt-16 md:pt-6"> 
           {activeSection === "dashboard" && (
             <>
               <SummaryCards />

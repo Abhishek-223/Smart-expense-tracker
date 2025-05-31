@@ -8,7 +8,7 @@ const ExpenseSchema = new mongoose.Schema(
     category: { type: String, required: true },
     date: { type: Date, default: Date.now },
     note: { type: String },
-    receiptUrl: { type: String }, // Optional: If using Cloudinary for receipts
+    receiptUrl: { type: String }, 
   },
   { timestamps: true }
 );

@@ -17,22 +17,19 @@ const SummaryCards = () => {
     setRemainingBalance(updatedBalance);
   }, [monthlyBudget, totalExpenses]);
 
-  // Handle Budget Change
   const handleBudgetChange = (e) => {
-    const newBudget = Number(e.target.value.replace(/[^0-9]/g, "")); // Allow only numbers
+    const newBudget = Number(e.target.value.replace(/[^0-9]/g, "")); 
     setMonthlyBudget(newBudget);
-    localStorage.setItem("monthlyBudget", newBudget); // Persist budget
+    localStorage.setItem("monthlyBudget", newBudget); 
   };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Total Expenses */}
       <div className="bg-white p-4 shadow rounded-lg">
         <h2 className="text-lg font-semibold">Total Expenses</h2>
         <p className="text-2xl font-bold text-red-500">Rs. {totalExpenses.toFixed(2)}</p>
       </div>
 
-      {/* Monthly Budget - Editable */}
       <div className="bg-white p-4 shadow rounded-lg">
         <h2 className="text-lg font-semibold">Monthly Budget</h2>
         <div className="flex items-center border rounded p-2">
@@ -46,7 +43,6 @@ const SummaryCards = () => {
         </div>
       </div>
 
-      {/* Remaining Balance */}
       <div className="bg-white p-4 shadow rounded-lg">
         <h2 className="text-lg font-semibold">Remaining Balance</h2>
         <p className={`text-2xl font-bold ${remainingBalance < 0 ? "text-red-500" : "text-green-500"}`}>

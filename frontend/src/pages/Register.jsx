@@ -13,7 +13,6 @@ const Register = () => {
 const url=`https://smart-expense-tracker-f7q7.onrender.com`
 // const url=`http://localhost:5000`
 
-  // 🔹 Handle Manual Registration
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -25,13 +24,11 @@ const url=`https://smart-expense-tracker-f7q7.onrender.com`
     }
   };
 
-  // 🔹 Handle Google Sign-Up Success
   const handleGoogleSuccess = async (response) => {
     try {
       const googleToken = response.credential;
       console.log("Google Token Received:", googleToken);
 
-      // Send Google token to backend
       const res = await axios.post(`${url}/api/auth/google`, { token: googleToken });
 
       if (res.data.token) {
@@ -61,8 +58,7 @@ const url=`https://smart-expense-tracker-f7q7.onrender.com`
           <div className="bg-login bg-opacity-70 w-1/2 backdrop-blur-md p-8 max-w-md animate-fade-in"></div>
           <div className="bg-opacity-70 p-8 min-h-screen shadow-lg w-full max-w-md animate-fade-in">
             <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
-            
-            {/* 🔹 Manual Sign-Up Form */}
+
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700">Name</label>
@@ -99,7 +95,6 @@ const url=`https://smart-expense-tracker-f7q7.onrender.com`
               </button>
             </form>
 
-            {/* 🔹 Google Sign-Up Button */}
             <div className="mt-4 text-center">
               <p className="text-gray-600">Or sign up with Google</p>
               <div className="flex justify-center mt-2">

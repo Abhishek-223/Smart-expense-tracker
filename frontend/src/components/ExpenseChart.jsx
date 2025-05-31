@@ -11,7 +11,7 @@ import {
   LinearScale,
 } from "chart.js";
 
-// Register chart components
+
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const ExpenseChart = () => {
@@ -35,13 +35,13 @@ const ExpenseChart = () => {
     }
   };
 
-  // Group expenses by category
+
   const categoryData = expenses.reduce((acc, expense) => {
     acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
     return acc;
   }, {});
 
-  // Prepare data for Pie Chart
+
   const pieChartData = {
     labels: Object.keys(categoryData),
     datasets: [
@@ -52,14 +52,13 @@ const ExpenseChart = () => {
     ],
   };
 
-  // Group expenses by month
+
   const monthlyData = expenses.reduce((acc, expense) => {
     const month = new Date(expense.date).toLocaleString("default", { month: "short" });
     acc[month] = (acc[month] || 0) + expense.amount;
     return acc;
   }, {});
 
-  // Prepare data for Bar Chart
   const barChartData = {
     labels: Object.keys(monthlyData),
     datasets: [
@@ -73,13 +72,11 @@ const ExpenseChart = () => {
 
   return (
     <div className="flex flex-col md:flex-row gap-6 p-4">
-      {/* Pie Chart - Expense by Category */}
       <div className="w-full md:w-1/2 p-4 bg-white shadow-lg rounded-lg">
         <h2 className="text-xl font-bold mb-4">Expenses by Category</h2>
         <Pie data={pieChartData} />
       </div>
 
-      {/* Bar Chart - Expense per Month */}
       <div className="w-full md:w-1/2 p-4 bg-white shadow-lg rounded-lg">
         <h2 className="text-xl font-bold mb-4">Monthly Expense Trend</h2>
         <Bar data={barChartData} />

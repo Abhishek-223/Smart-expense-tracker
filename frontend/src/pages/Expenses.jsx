@@ -18,24 +18,21 @@ const Expenses = () => {
     loadExpenses();
   }, [user]);
 
-  // Handle Delete
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this expense?")) {
       await deleteExpense(id, user.token);
-      setExpenses(expenses.filter((expense) => expense._id !== id)); // Remove from UI
+      setExpenses(expenses.filter((expense) => expense._id !== id)); 
     }
   };
 
-  // Handle Edit Input Change
   const handleEditChange = (e) => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
   };
 
-  // Save Updated Expense
   const handleUpdate = async (id) => {
     const updatedExpense = await updateExpense(id, editData, user.token);
     setExpenses(expenses.map((expense) => (expense._id === id ? updatedExpense : expense)));
-    setEditId(null); // Exit edit mode
+    setEditId(null); 
   };
 
   return (
@@ -55,7 +52,6 @@ const Expenses = () => {
           {expenses.length > 0 ? (
             expenses.map((expense) => (
               <tr key={expense._id} className="text-center">
-                {/* Edit Mode */}
                 {editId === expense._id ? (
                   <>
                     <td className="border p-2">
@@ -105,7 +101,6 @@ const Expenses = () => {
                   </>
                 ) : (
                   <>
-                    {/* Read-Only Mode */}
                     <td className="border p-2">{expense.title}</td>
                     <td className="border p-2">${expense.amount}</td>
                     <td className="border p-2">{expense.category}</td>

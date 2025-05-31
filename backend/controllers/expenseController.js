@@ -1,6 +1,5 @@
 import Expense from '../models/Expense.js';
 
-// Get all expenses
 export const getExpenses = async (req, res) => {
   try {
     const expenses = await Expense.find({ userId: req.user.id });
@@ -10,7 +9,6 @@ export const getExpenses = async (req, res) => {
   }
 };
 
-// Add a new expense
 export const addExpense = async (req, res) => {
   const { title, amount, category, date, note, receiptUrl } = req.body;
 
@@ -32,7 +30,6 @@ export const addExpense = async (req, res) => {
   }
 };
 
-// Update an expense
 export const updateExpense = async (req, res) => {
   const { title, amount, category, date, note, receiptUrl } = req.body;
 
@@ -49,7 +46,6 @@ export const updateExpense = async (req, res) => {
   }
 };
 
-// Delete an expense
 export const deleteExpense = async (req, res) => {
   try {
     await Expense.findByIdAndDelete(req.params.id);

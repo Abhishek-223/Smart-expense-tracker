@@ -39,7 +39,7 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title */}
+
         <div>
           <label className="block text-gray-700 font-medium">Title</label>
           <input
@@ -52,7 +52,6 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           />
         </div>
 
-        {/* Amount */}
         <div>
           <label className="block text-gray-700 font-medium">Amount</label>
           <div className="flex items-center border rounded">
@@ -68,7 +67,6 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           </div>
         </div>
 
-        {/* Category */}
         <div>
           <label className="block text-gray-700 font-medium">Category</label>
           <select
@@ -83,7 +81,6 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           </select>
         </div>
 
-        {/* Date */}
         <div>
           <label className="block text-gray-700 font-medium">Date</label>
           <input
@@ -95,7 +92,6 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           />
         </div>
 
-        {/* Note */}
         <div>
           <label className="block text-gray-700 font-medium">Note</label>
           <textarea
@@ -106,13 +102,11 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           />
         </div>
 
-        {/* Receipt Upload */}
         <div>
           <label className="block text-gray-700 font-medium">Upload Receipt (optional)</label>
           <ReceiptUpload onUpload={setReceiptUrl} />
         </div>
 
-        {/* Buttons */}
         <div className="flex flex-col md:flex-row justify-between gap-2">
           <button
             type="submit"

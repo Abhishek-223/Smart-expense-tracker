@@ -10,13 +10,13 @@ export const useExpenses = () => {
 
 export const ExpenseProvider = ({ children }) => {
   const [expenses, setExpenses] = useState([]);
-  const { authToken } = useAuth(); // Get authToken from AuthContext
+  const { authToken } = useAuth(); 
   const url=`https://smart-expense-tracker-f7q7.onrender.com`
   // const url=`http://localhost:5000`
 
   useEffect(() => {
     const fetchExpenses = async () => {
-      if (!authToken) return; // Don't fetch if there's no token
+      if (!authToken) return; 
 
       try {
         const response = await axios.get(`${url}/api/expenses`, {
@@ -29,14 +29,14 @@ export const ExpenseProvider = ({ children }) => {
     };
 
     fetchExpenses();
-  }, [authToken]); // Fetch expenses whenever authToken changes
+  }, [authToken]); 
 
   const addExpense = async (expense) => {
     try {
       const response = await axios.post(`${url}/api/expenses/add`, expense, {
         headers: { 
           Authorization: `Bearer ${authToken}`,
-          "Content-Type": "application/json" // ✅ Ensures JSON is sent correctly
+          "Content-Type": "application/json" 
         },
       });
 
@@ -66,7 +66,6 @@ export const ExpenseProvider = ({ children }) => {
         headers: { Authorization: `Bearer ${authToken}` },
       });
 
-      // Remove from state after deletion
       setExpenses((prevExpenses) => prevExpenses.filter((expense) => expense._id !== id));
     } catch (error) {
       console.error("Failed to delete expense:", error.response ? error.response.data : error.message);
