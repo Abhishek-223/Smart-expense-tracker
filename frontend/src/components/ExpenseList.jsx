@@ -6,6 +6,7 @@ const ExpenseList = ({ openEditForm }) => {
   const { expenses, deleteExpense, updateExpense } = useExpenses();
   const [sortBy, setSortBy] = useState("newest");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const url = `${import.meta.env.VITE_BACKEND_URL}`;
 
   const sortedExpenses = [...expenses].sort((a, b) => {
     switch (sortBy) {
