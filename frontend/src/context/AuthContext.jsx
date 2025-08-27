@@ -10,7 +10,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [authToken, setAuthToken] = useState(localStorage.getItem("token") || "");
-  const url=`https://smart-expense-tracker-f7q7.onrender.com`
+  const url=`${import.meta.env.VITE_BACKEND_URL}`
   // const url = `http://localhost:5000`
 
   useEffect(() => {

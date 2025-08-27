@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: "https://smart-expense-tracker-f7q7.onrender.com/api", // Backend URL
+  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`, // Backend URL
 });
 
 // Request Interceptor - Attach Token

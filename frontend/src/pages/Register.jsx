@@ -10,7 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const { register, login } = useContext(AuthContext);
   const navigate = useNavigate();
-const url=`https://smart-expense-tracker-f7q7.onrender.com`
+const url=`${import.meta.env.VITE_BACKEND_URL}`
 // const url=`http://localhost:5000`
 
   const handleSubmit = async (e) => {
