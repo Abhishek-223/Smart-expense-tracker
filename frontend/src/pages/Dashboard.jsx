@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [showForm, setShowForm] = useState(false);
   const [editingExpense, setEditingExpense] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // ✅ Sidebar is open by default on desktop
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);

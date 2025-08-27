@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "./AuthContext"; // Import AuthContext to get authToken
+import { useAuth } from "./AuthContext"; 
 
 const ExpenseContext = createContext();
 

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
@@ -33,13 +33,9 @@ const url=`https://smart-expense-tracker-f7q7.onrender.com`
 
       if (res.data.token) {
         console.log("Backend Response:", res.data);
-
-        // 🔹 Store token & user details
         login(res.data.token);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-
-        // 🔹 Navigate to Dashboard
         navigate("/dashboard");
       } else {
         console.error("Google login failed: No token received from backend");
@@ -104,15 +100,15 @@ const url=`https://smart-expense-tracker-f7q7.onrender.com`
 
             <h2 className="mt-4 text-center">
               Have an account?{" "}
-              <a href="/login" className="text-blue-500 hover:underline">
+              <Link to="/login" className="text-gray-600 hover:underline">
                 Sign In
-              </a>
+              </Link>
             </h2>
           </div>
         </div>
       </div>
     </GoogleOAuthProvider>
-  );
+  ); 
 };
 
 export default Register;
