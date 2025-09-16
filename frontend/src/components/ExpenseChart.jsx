@@ -74,12 +74,16 @@ const ExpenseChart = () => {
     <div className="flex flex-col md:flex-row gap-6 p-4">
       <div className="w-full md:w-1/2 p-4 bg-white shadow-lg rounded-lg">
         <h2 className="text-xl font-bold mb-4">Expenses by Category</h2>
-        <Pie data={pieChartData} />
+        <div className="w-full">
+          <Pie data={pieChartData} options={{ maintainAspectRatio: false, responsive: true }} height={280} />
+        </div>
       </div>
 
       <div className="w-full md:w-1/2 p-4 bg-white shadow-lg rounded-lg">
         <h2 className="text-xl font-bold mb-4">Monthly Expense Trend</h2>
-        <Bar data={barChartData} />
+        <div className="w-full">
+          <Bar data={barChartData} options={{ maintainAspectRatio: false, responsive: true }} height={280} />
+        </div>
       </div>
     </div>
   );

@@ -36,22 +36,26 @@ const Expenses = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Your Expenses</h2>
-      <table className="w-full border-collapse border border-gray-300">
+    <div className="p-4 md:p-6">
+      <div className="bg-white/80 backdrop-blur-md rounded-xl shadow p-4 md:p-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+          <h2 className="text-xl md:text-2xl font-bold text-blue-700">Your Expenses</h2>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
         <thead>
-          <tr className="bg-gray-100">
+              <tr className="bg-gray-100 text-left text-sm">
             <th className="border p-2">Title</th>
             <th className="border p-2">Amount</th>
             <th className="border p-2">Category</th>
             <th className="border p-2">Date</th>
-            <th className="border p-2">Actions</th>
+                <th className="border p-2 text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
           {expenses.length > 0 ? (
             expenses.map((expense) => (
-              <tr key={expense._id} className="text-center">
+                  <tr key={expense._id} className="text-center text-sm">
                 {editId === expense._id ? (
                   <>
                     <td className="border p-2">
@@ -84,16 +88,16 @@ const Expenses = () => {
                     <td className="border p-2">
                       {new Date(expense.date).toLocaleDateString()}
                     </td>
-                    <td className="border p-2 flex justify-center gap-2">
+                        <td className="border p-2 flex flex-col md:flex-row justify-center gap-2">
                       <button
                         onClick={() => handleUpdate(expense._id)}
-                        className="bg-green-500 text-white px-2 py-1 rounded"
+                            className="bg-green-500 text-white px-2 py-1 rounded w-full md:w-auto"
                       >
                         Save
                       </button>
                       <button
                         onClick={() => setEditId(null)}
-                        className="bg-gray-400 text-white px-2 py-1 rounded"
+                            className="bg-gray-400 text-white px-2 py-1 rounded w-full md:w-auto"
                       >
                         Cancel
                       </button>
@@ -101,25 +105,25 @@ const Expenses = () => {
                   </>
                 ) : (
                   <>
-                    <td className="border p-2">{expense.title}</td>
-                    <td className="border p-2">${expense.amount}</td>
+                        <td className="border p-2 break-words max-w-[200px]">{expense.title}</td>
+                        <td className="border p-2">Rs.{expense.amount}</td>
                     <td className="border p-2">{expense.category}</td>
                     <td className="border p-2">
                       {new Date(expense.date).toLocaleDateString()}
                     </td>
-                    <td className="border p-2 flex justify-center gap-2">
+                        <td className="border p-2 flex flex-col md:flex-row justify-center gap-2">
                       <button
                         onClick={() => {
                           setEditId(expense._id);
                           setEditData(expense);
                         }}
-                        className="bg-yellow-500 text-white px-2 py-1 rounded"
+                            className="bg-yellow-500 text-white px-2 py-1 rounded w-full md:w-auto"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(expense._id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded"
+                            className="bg-red-500 text-white px-2 py-1 rounded w-full md:w-auto"
                       >
                         Delete
                       </button>
@@ -130,13 +134,15 @@ const Expenses = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="5" className="p-4 text-center text-gray-500">
+                  <td colSpan="5" className="p-6 text-center text-gray-500">
                 No expenses found
               </td>
             </tr>
           )}
         </tbody>
       </table>
+        </div>
+      </div>
     </div>
   );
 };

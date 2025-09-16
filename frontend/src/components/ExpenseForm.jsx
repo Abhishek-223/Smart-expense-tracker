@@ -54,8 +54,8 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
 
         <div>
           <label className="block text-gray-700 font-medium">Amount</label>
-          <div className="flex items-center border rounded">
-            <span className="bg-gray-200 px-3 py-2 text-gray-700">Rs.</span>
+          <div className="flex items-center border rounded overflow-hidden">
+            <span className="bg-gray-200 px-3 py-2 text-gray-700 whitespace-nowrap">Rs.</span>
             <input
               type="number"
               placeholder="Amount"
@@ -67,7 +67,7 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           </div>
         </div>
 
-        <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <label className="block text-gray-700 font-medium">Category</label>
           <select
             className="border p-2 w-full rounded focus:ring focus:ring-blue-300"
@@ -81,7 +81,7 @@ const ExpenseForm = ({ existingExpense, closeForm }) => {
           </select>
         </div>
 
-        <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <label className="block text-gray-700 font-medium">Date</label>
           <input
             type="date"

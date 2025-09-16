@@ -54,12 +54,12 @@ const ExpenseList = ({ openEditForm }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md w-full">
-      <div className="flex justify-between mb-4">
+    <div className="bg-white p-4 md:p-6 rounded-lg shadow-md w-full">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 md:gap-4 mb-4">
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="border p-2 rounded"
+          className="border p-2 rounded w-full md:w-auto"
         >
           <option value="newest">Newest</option>
           <option value="oldest">Oldest</option>
@@ -70,7 +70,7 @@ const ExpenseList = ({ openEditForm }) => {
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="border p-2 rounded"
+          className="border p-2 rounded w-full md:w-auto"
         >
           <option value="all">All Categories</option>
           <option value="food">Food</option>
@@ -96,24 +96,24 @@ const ExpenseList = ({ openEditForm }) => {
           <tbody>
             {filteredExpenses.map((expense) => (
               <tr key={expense._id} className="border-t text-xs md:text-sm">
-                <td className="py-2 px-2 text-center">{new Date(expense.date).toLocaleDateString()}</td>
-                <td className="py-2 px-2 text-center">{expense.title}</td>
-                <td className="py-2 px-2 text-center">{expense.category}</td>
-                <td className="py-2 px-2 text-center">Rs.{expense.amount}</td>
+                <td className="py-2 px-2 text-center whitespace-nowrap">{new Date(expense.date).toLocaleDateString()}</td>
+                <td className="py-2 px-2 text-center break-words max-w-[160px] md:max-w-none">{expense.title}</td>
+                <td className="py-2 px-2 text-center capitalize">{expense.category}</td>
+                <td className="py-2 px-2 text-center whitespace-nowrap">Rs.{expense.amount}</td>
                 <td className="py-2 px-2 text-center">
                   {expense.receiptUrl ? (
                     <a href={expense.receiptUrl} target="_blank" rel="noopener noreferrer">
-                      <img src={expense.receiptUrl} alt="Receipt" className="w-8 h-8 md:w-12 md:h-12 rounded" />
+                      <img src={expense.receiptUrl} alt="Receipt" className="w-10 h-10 md:w-12 md:h-12 rounded object-cover" />
                     </a>
                   ) : (
-                    <input type="file" onChange={(e) => handleImageUpload(e, expense._id)} className="border p-1" />
+                    <input type="file" onChange={(e) => handleImageUpload(e, expense._id)} className="border p-1 w-full md:w-auto" />
                   )}
                 </td>
                 <td className="py-2 px-2 text-center">
-                  <button className="bg-yellow-500 text-white px-2 py-1 rounded mr-2" onClick={() => openEditForm(expense)}>
+                  <button className="bg-yellow-500 text-white px-2 py-1 rounded mr-2 mb-2 md:mb-0 w-full md:w-auto" onClick={() => openEditForm(expense)}>
                     Edit
                   </button>
-                  <button className="bg-red-500 text-white px-2 py-1 rounded" onClick={() => deleteExpense(expense._id)}>
+                  <button className="bg-red-500 text-white px-2 py-1 rounded w-full md:w-auto" onClick={() => deleteExpense(expense._id)}>
                     Delete
                   </button>
                 </td>

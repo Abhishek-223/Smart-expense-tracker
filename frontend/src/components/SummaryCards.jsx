@@ -24,28 +24,28 @@ const SummaryCards = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="bg-white p-4 shadow rounded-lg">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="bg-white p-4 md:p-5 shadow rounded-lg">
         <h2 className="text-lg font-semibold">Total Expenses</h2>
-        <p className="text-2xl font-bold text-red-500">Rs. {totalExpenses.toFixed(2)}</p>
+        <p className="text-xl md:text-2xl font-bold text-red-500">Rs. {totalExpenses.toFixed(2)}</p>
       </div>
 
-      <div className="bg-white p-4 shadow rounded-lg">
+      <div className="bg-white p-4 md:p-5 shadow rounded-lg">
         <h2 className="text-lg font-semibold">Monthly Budget</h2>
         <div className="flex items-center border rounded p-2">
-          <span className="text-xl font-bold text-black mr-1">Rs.</span>
+          <span className="text-lg md:text-xl font-bold text-black mr-1">Rs.</span>
           <input
             type="text"
             value={`${monthlyBudget}`}
             onChange={handleBudgetChange}
-            className="w-full text-xl font-bold text-left outline-none"
+            className="w-full text-lg md:text-xl font-bold text-left outline-none"
           />
         </div>
       </div>
 
-      <div className="bg-white p-4 shadow rounded-lg">
+      <div className="bg-white p-4 md:p-5 shadow rounded-lg">
         <h2 className="text-lg font-semibold">Remaining Balance</h2>
-        <p className={`text-2xl font-bold ${remainingBalance < 0 ? "text-red-500" : "text-green-500"}`}>
+        <p className={`text-xl md:text-2xl font-bold ${remainingBalance < 0 ? "text-red-500" : "text-green-500"}`}>
           Rs. {remainingBalance.toFixed(2)}
         </p>
       </div>

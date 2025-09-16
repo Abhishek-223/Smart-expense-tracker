@@ -50,6 +50,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithToken = (userFromApi, tokenFromApi) => {
+    if (!tokenFromApi || !userFromApi) {
+      throw new Error("Missing token or user for loginWithToken");
+    }
+    localStorage.setItem("token", tokenFromApi);
+    localStorage.setItem("user", JSON.stringify(userFromApi));
+    setUser(userFromApi);
+    setAuthToken(tokenFromApi);
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -58,7 +68,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, authToken, login, logout, register }}>
+    <AuthContext.Provider value={{ user, authToken, login, loginWithToken, logout, register }}>
       {children}
     </AuthContext.Provider>
   );

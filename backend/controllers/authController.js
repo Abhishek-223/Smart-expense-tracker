@@ -44,12 +44,20 @@ export const loginUser = async (req, res) => {
 export const googleLogin = async (req, res) => {
   try {
     const { token } = req.body;
+    console.log('Google login request from origin:', req.headers.origin);
+    console.log('Expected GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
-    const { name, email, picture } = ticket.getPayload();
+    const payload = ticket.getPayload();
+    const { name, email, picture, aud } = payload;
+    console.log('Token audience (aud):', aud);
+    if (aud !== process.env.GOOGLE_CLIENT_ID) {
+      console.error('Google token audience mismatch', { aud, expected: process.env.GOOGLE_CLIENT_ID });
+      return res.status(401).json({ error: 'Invalid token audience' });
+    }
 
     let user = await User.findOne({ email });
     if (!user) {
@@ -63,6 +71,7 @@ export const googleLogin = async (req, res) => {
     });
   } catch (error) {
     console.error("Google authentication error:", error);
-    res.status(401).json({ error: "Google authentication failed" });
+    const message = (error && (error.message || error.toString())) || 'Google authentication failed';
+    res.status(401).json({ error: message });
   }
 };

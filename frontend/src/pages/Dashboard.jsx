@@ -34,31 +34,31 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 w-full">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 w-full">
       <Header toggleSidebar={toggleSidebar} className="relative z-50" /> 
-  
+
       <div className="w-full flex relative">
         <Sidebar 
           setActiveSection={setActiveSection} 
           isSidebarOpen={isSidebarOpen} 
           toggleSidebar={toggleSidebar} 
         />
-  
-        <div className="p-6 w-full pt-16 md:pt-6"> 
+
+        <div className="p-4 md:p-6 w-full pt-16 md:pt-6"> 
           {activeSection === "dashboard" && (
             <>
               <SummaryCards />
   
               <div className="mt-6 w-full">
                 {showForm ? (
-                  <div className="bg-white p-6 rounded-lg shadow-md">
+                  <div className="bg-white/80 backdrop-blur-md p-6 rounded-xl shadow">
                     <h2 className="text-2xl font-bold mb-4">
                       {editingExpense ? "Edit Expense" : "Add Expense"}
                     </h2>
                     <ExpenseForm existingExpense={editingExpense} closeForm={closeForm} />
                   </div>
                 ) : (
-                  <div className="bg-white p-4 shadow rounded-lg">
+                  <div className="bg-white/80 backdrop-blur-md p-4 shadow rounded-xl">
                     <h2 className="text-xl font-semibold mb-4">Recent Expenses</h2>
                     <ExpenseList openEditForm={openEditForm} />
                   </div>
@@ -68,14 +68,14 @@ const Dashboard = () => {
           )}
   
           {activeSection === "add-expense" && (
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-white/80 backdrop-blur-md p-6 rounded-xl shadow">
               <h2 className="text-2xl font-bold mb-4">Add Expense</h2>
               <ExpenseForm existingExpense={editingExpense} closeForm={closeForm} />
             </div>
           )}
   
           {activeSection === "reports" && (
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-white/80 backdrop-blur-md p-6 rounded-xl shadow">
               <h2 className="text-2xl font-bold mb-4">Expense Reports</h2>
               <ExpenseChart />
             </div>

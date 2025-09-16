@@ -27,12 +27,10 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-cover min-h-screen flex items-center justify-center">
-      <div className="flex bg-transparent bg-gray-400 bg-opacity-30 items-center backdrop-blur-md w-2/3 shadow-lg justify-center">
-        <div className="bg-login bg-opacity-70 w-1/2 backdrop-blur-md p-8 max-w-md animate-fade-in">
-        </div>
-        <div className="bg-opacity-70 w-1/2 backdrop-blur-md p-8 max-w-md animate-fade-in">
-          <h2 className="text-2xl font-bold mb-6 text-center text-grey-700">Login</h2>
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-md bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-6 md:p-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-blue-700">Welcome back</h2>
+          <p className="text-center text-gray-600 mb-6">Log in to your account</p>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block text-grey-700">Email</label>
@@ -55,17 +53,16 @@ const Login = () => {
               />
             </div>
             {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
-            <button type="submit" className="bg-primary-green text-white p-2 w-full rounded hover:bg-primary-green mb-4">
-              Login
+            <button type="submit" className="bg-blue-600 text-white p-2 w-full rounded hover:bg-blue-700 mb-4">
+              Sign in
             </button>
           </form>
-          <h2>
+          <h2 className="text-center text-gray-700">
             Don't have an account?
-            <div onClick={handleSignUp} className="text-blue-300 cursor-pointer">
-              Sign Up
-            </div>
+            <span onClick={handleSignUp} className="text-blue-600 cursor-pointer ml-1 hover:underline">
+              Create one
+            </span>
           </h2>
-        </div>
       </div>
     </div>
   );
