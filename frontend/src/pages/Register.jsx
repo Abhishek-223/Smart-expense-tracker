@@ -8,10 +8,9 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { register, login, loginWithToken } = useContext(AuthContext);
+  const { register, loginWithToken } = useContext(AuthContext);
   const navigate = useNavigate();
-const url=`${import.meta.env.VITE_BACKEND_URL}`
-// const url=`http://localhost:5000`
+  const url = `${import.meta.env.VITE_BACKEND_URL}`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,27 +26,24 @@ const url=`${import.meta.env.VITE_BACKEND_URL}`
   const handleGoogleSuccess = async (response) => {
     try {
       const googleToken = response.credential;
-      console.log("Google Token Received:", googleToken);
-      if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) {
-        alert('Missing VITE_GOOGLE_CLIENT_ID env. Please set it and restart dev server.');
+      console.log("Google client ID :",import.meta.env.VITE_GOOGLE_CLIENT_ID);
+      if (!import.meta.env.GOOGLE_CLIENT_ID) {
+        alert("Missing VITE_GOOGLE_CLIENT_ID env. Please set it and restart dev server.");
         return;
       }
-      const res = await axios.post(`${url}/api/auth/google`, { token: googleToken });
-
-      if (res.data.token) {
-        console.log("Backend Response:", res.data);
+      const res = await axios.post(`${url}/api/auth/google-login`, { token: googleToken });
+      if (res.data?.token && res.data?.user) {
         loginWithToken(res.data.user, res.data.token);
         navigate("/dashboard");
       } else {
-        console.error("Google login failed: No token received from backend");
         alert("Google sign-in failed. Please try again.");
       }
     } catch (error) {
-      console.error("Google Sign-Up failed", error);
-      const msg = error?.response?.data?.error || error?.message || 'Unknown error';
-      alert(`Google sign-in failed: ${msg}. Check Authorized origins and Client IDs.`);
+      const msg = error?.response?.data?.error || error?.message || "Unknown error";
+      alert(`Google sign-in failed: ${msg}`);
     }
   };
+
 
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
@@ -65,6 +61,7 @@ const url=`${import.meta.env.VITE_BACKEND_URL}`
                 className="border p-2 w-full rounded"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </div>
             <div className="mb-4">
@@ -75,6 +72,7 @@ const url=`${import.meta.env.VITE_BACKEND_URL}`
                 className="border p-2 w-full rounded"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="mb-6">
@@ -85,6 +83,7 @@ const url=`${import.meta.env.VITE_BACKEND_URL}`
                 className="border p-2 w-full rounded"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
             <button type="submit" className="bg-blue-600 text-white p-2 w-full rounded hover:bg-blue-700">
@@ -102,7 +101,7 @@ const url=`${import.meta.env.VITE_BACKEND_URL}`
               </div>
             </div>
             <div className="flex justify-center mt-3">
-              <GoogleLogin onSuccess={handleGoogleSuccess} onError={(err) => { console.error("Google Sign-Up Failed", err); }} />
+              <GoogleLogin onSuccess={handleGoogleSuccess} onError={() => { alert("Google Sign-In failed"); }} />
             </div>
           </div>
 

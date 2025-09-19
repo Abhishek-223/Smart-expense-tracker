@@ -2,14 +2,16 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import '../Styles/Login.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { login } = useContext(AuthContext);
+  const { login, loginWithToken } = useContext(AuthContext);
   const navigate = useNavigate();
+  const url = `${import.meta.env.VITE_BACKEND_URL}`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,8 +28,29 @@ const Login = () => {
     navigate("/register");
   };
 
+  const handleGoogleSuccess = async (response) => {
+    try {
+      const googleToken = response.credential;
+      if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) {
+        alert("Missing VITE_GOOGLE_CLIENT_ID env. Please set it and restart dev server.");
+        return;
+      }
+      const res = await axios.post(`${url}/api/auth/google-login`, { token: googleToken });
+      if (res.data?.token && res.data?.user) {
+        loginWithToken(res.data.user, res.data.token);
+        navigate("/dashboard");
+      } else {
+        alert("Google sign-in failed. Please try again.");
+      }
+    } catch (error) {
+      const msg = error?.response?.data?.error || error?.message || "Unknown error";
+      alert(`Google sign-in failed: ${msg}`);
+    }
+  };
+
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4">
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-6 md:p-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-blue-700">Welcome back</h2>
           <p className="text-center text-gray-600 mb-6">Log in to your account</p>
@@ -40,6 +63,7 @@ const Login = () => {
                 className="border p-2 w-full rounded"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div className="mb-6">
@@ -50,6 +74,7 @@ const Login = () => {
                 className="border p-2 w-full rounded"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
             {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
@@ -57,6 +82,19 @@ const Login = () => {
               Sign in
             </button>
           </form>
+          <div className="mt-5">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-white/80 px-2 text-gray-500">Or continue with</span>
+              </div>
+            </div>
+            <div className="flex justify-center mt-3">
+              <GoogleLogin onSuccess={handleGoogleSuccess} onError={() => { alert("Google Sign-In failed"); }} />
+            </div>
+          </div>
           <h2 className="text-center text-gray-700">
             Don't have an account?
             <span onClick={handleSignUp} className="text-blue-600 cursor-pointer ml-1 hover:underline">
@@ -65,6 +103,7 @@ const Login = () => {
           </h2>
       </div>
     </div>
+    </GoogleOAuthProvider>
   );
 };
 
