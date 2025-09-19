@@ -30,7 +30,7 @@ const Header = ({ toggleSidebar }) => {
       <div className="hidden md:flex items-center gap-4 relative">
         <span className="text-gray-700 font-medium">{user?.name}</span>
         <img
-          src={user?.profilePic || "/default-avatar.png"}
+          src="/default-avatar.png"
           alt="User Avatar"
           className="w-10 h-10 rounded-full border cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -55,7 +55,7 @@ const Header = ({ toggleSidebar }) => {
           className="flex items-center gap-2 p-2 rounded-full hover:bg-gray-100"
         >
           <img
-            src={user?.profilePic || "/default-avatar.png"}
+            src="/default-avatar.png"
             alt="User Avatar"
             className="w-10 h-10 rounded-full border"
           />

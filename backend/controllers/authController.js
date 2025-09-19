@@ -5,6 +5,53 @@ import { OAuth2Client } from "google-auth-library";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+
+export const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body; // frontend sends Google ID token
+
+    // 1. Verify Google token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+
+    const { sub: googleId, email, name } = payload;
+
+    // 2. Check if user exists
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // 3. If not, create user with dummy password
+      const randomPassword = Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+      user = await User.create({
+        name,
+        email,
+        googleId,
+        password: hashedPassword,
+        loginType: "google",
+      });
+    }
+
+    // 4. Issue JWT
+    const authToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.json({
+      token: authToken,
+      user: { id: user._id, name: user.name, email: user.email },
+    });
+  } catch (error) {
+    console.error("Google login error:", error);
+    res.status(500).json({ error: "Google login failed" });
+  }
+};
+
+
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -30,6 +77,12 @@ export const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
+    if (user.loginType === "google") {
+      return res.status(400).json({
+        message: "This account uses Google Sign-In. Please log in with Google.",
+      });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
@@ -41,37 +94,3 @@ export const loginUser = async (req, res) => {
   }
 };
 
-export const googleLogin = async (req, res) => {
-  try {
-    const { token } = req.body;
-    console.log('Google login request from origin:', req.headers.origin);
-    console.log('Expected GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-
-    const payload = ticket.getPayload();
-    const { name, email, picture, aud } = payload;
-    console.log('Token audience (aud):', aud);
-    if (aud !== process.env.GOOGLE_CLIENT_ID) {
-      console.error('Google token audience mismatch', { aud, expected: process.env.GOOGLE_CLIENT_ID });
-      return res.status(401).json({ error: 'Invalid token audience' });
-    }
-
-    let user = await User.findOne({ email });
-    if (!user) {
-      user = await User.create({ name, email, profilePic: picture, password: "" });
-    }
-
-    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-    res.json({ 
-      token: jwtToken, 
-      user: { id: user._id, name: user.name, email: user.email, profilePic: picture }
-    });
-  } catch (error) {
-    console.error("Google authentication error:", error);
-    const message = (error && (error.message || error.toString())) || 'Google authentication failed';
-    res.status(401).json({ error: message });
-  }
-};
