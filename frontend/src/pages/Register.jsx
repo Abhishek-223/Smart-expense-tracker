@@ -11,7 +11,6 @@ const Register = () => {
   const { register, login, loginWithToken } = useContext(AuthContext);
   const navigate = useNavigate();
 const url=`${import.meta.env.VITE_BACKEND_URL}`
-// const url=`http://localhost:5000`
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +26,6 @@ const url=`${import.meta.env.VITE_BACKEND_URL}`
   const handleGoogleSuccess = async (response) => {
     try {
       const googleToken = response.credential;
-      console.log("Google Token Received:", googleToken);
       if (!import.meta.env.VITE_GOOGLE_CLIENT_ID) {
         alert('Missing VITE_GOOGLE_CLIENT_ID env. Please set it and restart dev server.');
         return;
